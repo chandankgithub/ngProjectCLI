@@ -1,0 +1,67 @@
+<div>
+    <h1>
+        Posts
+        <span *ngIf="_networkDown">
+            (Network Down)
+        </span>
+    </h1>
+    
+    <div class="col-md-6">
+        <div>
+            <spinner [visible]="_postsLoading"></spinner>
+        </div>
+        <div *ngIf="!_postsLoading">
+            <ul class="list-group posts">
+                <div>
+                    <select class="form-control" 
+                            [(ngModel)]="selectedVal"
+                            (change)="userChanged(selectedVal)">
+                        <option *ngFor="let user of _users"
+                                [ngValue]="user.id">{{user.name}}</option>
+                    </select>
+                </div>
+                <spinner [visible]="_isUserPostsLoading"></spinner>
+                <div>
+                        <pagination [itemLength]="_allPosts.length" [pageSize]="_pageSize"
+                                (onPageChanged)="loadPostsByPageNumber($event)"></pagination>
+                </div>
+               
+                <li class="list-group-item" 
+                    [ngClass]="{
+                        'active':_selectedIndex === i
+                    }"
+                    (click)="selectPostItem(post, i)"
+                    *ngFor ="let post of _posts, let i=index">{{post.title}}
+                </li>
+            </ul>
+        </div>
+        
+    </div>
+   <div class="col-md-6" *ngIf="_showPostDetail">
+    <div class="panel panel-default">
+        <div class="panel-heading">{{_postTitle}}</div>
+        <div class="panel-body">
+            {{_postBody}}
+        </div>
+        <hr />
+        <div>
+            <div style="text-align: center">
+                <spinner [visible]="_isCommentLoading"></spinner>
+            </div>
+            <div class="media" *ngFor="let comment of _comments, let i=index">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object img-circle" src="http://lorempixel.com/80/80/people/?random={{i}}">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">{{comment.name}}</h4>
+                        {{comment.body}}
+                    </div>
+                </div>
+            
+        </div>
+
+    </div>
+</div>
+</div>

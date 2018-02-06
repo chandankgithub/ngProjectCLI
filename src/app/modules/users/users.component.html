@@ -1,0 +1,50 @@
+<h1>Users <span *ngIf="networkException">
+                (Network Down)
+            </span>
+</h1>
+
+<div>
+    <a class="btn btn-primary" routerLink="new">Add User</a>
+</div>
+<p>
+</p>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Email</td>
+                <td>Edit</td>
+                <td>Delete</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngIf="_isLoading">
+                <td colspan="4">
+                    <div style="text-align: center">
+                        <spinner [visible]="_isLoading"> </spinner>
+                    </div>
+                </td>
+            </tr>
+            <tr *ngFor="let user of users, let i=index">
+                <td>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <img width="30px" class="media-object img-circle" src="http://lorempixel.com/80/80/people/?random={{i}}">
+                        </div>
+                        <div>
+                            <span>{{user.name}} </span>
+                        </div>
+                    </div>
+                </td>
+                <td>{{user.email}}</td>
+                <td>
+                    <a [routerLink]="[user.id]" class="glyphicon glyphicon-edit"></a>
+                </td>
+                <td>
+                    <a (click)="deleteUser(user)" class="glyphicon glyphicon-remove"></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

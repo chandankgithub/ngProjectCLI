@@ -1,0 +1,92 @@
+<h1>
+    {{_formPuropse}} User
+</h1>
+<div class="col-md-6 col-lg-6 well">
+    <form [formGroup]="_signupform" (ngSubmit)="signup()">
+        <fieldset>
+            <legend>User</legend>
+            <label for="">Name</label>
+                <div class="form-group">
+                    <input  formControlName="name" 
+                            type="text" 
+                            class="form-control"
+                            [(ngModel)]="_user.name">
+                            
+                        <div *ngIf="_signupform.controls.name.touched && 
+                                        _signupform.controls.name.errors">
+                            <p class="alert alert-danger" 
+                                *ngIf="_signupform.controls.name.errors.required">
+                                    Name is required.
+                            </p>
+                        </div>
+                </div>
+               
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input  type="text" 
+                            class="form-control"
+                            formControlName="email"
+                            [(ngModel)]="_user.email">
+
+                            <div *ngIf="_signupform.controls.email.touched && 
+                                            _signupform.controls.email.errors">
+                                <p class="alert alert-danger"
+                                    *ngIf="_signupform.controls.email.errors.required">
+                                    Email is required.
+                                </p>
+                                 <p class="alert alert-danger"
+                                    *ngIf="!_signupform.controls.email.errors.required && !_signupform.controls.email.errors.validEmail">
+                                    Please type a valid email.
+                                </p>
+                            </div>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input  type="text" 
+                            class="form-control"
+                            formControlName="phone"
+                            [(ngModel)]="_user.phone">
+                </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Address</legend>
+            <div formGroupName="address">
+
+                <div class="form-group">
+                    <label for="street">Street</label>
+                    <input type="text" 
+                            class="form-control"
+                            formControlName="street"
+                            [(ngModel)]="_user.address.street">
+                </div>
+                <div class="form-group">
+                    <label for="suite">Suite</label>
+                    <input type="text" 
+                            class="form-control"
+                            formControlName="suite"
+                            [(ngModel)]="_user.address.suite">
+                </div>
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" 
+                            class="form-control"
+                            formControlName="city"
+                            [(ngModel)]="_user.address.city">
+                </div>
+                <div class="form-group">
+                    <label for="zipcode">ZipCode</label>
+                    <input type="text" 
+                            class="form-control"
+                            formControlName="zipcode"
+                            [(ngModel)]="_user.address.zipcode">
+                </div>
+            </div>
+        </fieldset>
+
+        <div>
+            <button class="btn btn-primary"
+                    [disabled]="!_signupform.valid">Save</button>
+        </div>
+    </form>
+</div>
